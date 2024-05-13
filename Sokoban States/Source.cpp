@@ -24,13 +24,13 @@ int dy[] = { 0, 1, 0, -1 };
 vector<vector<int>> init()
 {
 	vector<vector<int>> state = {
-		{1,1,1,1,1},
-		{1,0,0,0,1},
-		{1,3,2,0,1},
-		{1,1,1,0,1},
-		{1,3,2,0,1},
-		{1,0,0,0,1},
-		{1,1,1,1,1}
+		   {1,1,1,1,1,1,1},
+		   {1,0,0,2,3,0,1},
+		   {1,0,3,0,0,0,1},
+		   {1,0,2,0,0,2,1},
+		   {1,0,0,0,0,3,1},
+		   {1,0,0,0,0,0,1},
+		   {1,1,1,1,1,1,1}
 	};
 
 	return state;
@@ -79,11 +79,10 @@ bool isDeadlock(vector<vector<int>> state)
 		for (int i = 0; i < 4; i++)
 		{
 			int x = box.first, y = box.second;
-			if (x + i < xSize && x + i >= 0 && y + i < ySize && y + i >= 0)
-			{
-				if (state[x + i][y + i] == 1)
-					count++;
-			}
+
+			if (state[x + dx[i]][y + dy[i]] == 1 || state[x + dx[i]][y + dy[i]] == 2 || state[x + dx[i]][y + dy[i]] == 4)
+				count++;
+
 		}
 
 		if (count > 1)
@@ -271,7 +270,7 @@ void QLearn(vector<vector<int>> emptyState, int iterations, double gamma)
 			//		cout << y << " ";
 			//	cout << endl;
 			//}
-			//cout << i << endl;
+			cout << i << endl;
 		} while (!isDeadlock(state));
 	}
 }
