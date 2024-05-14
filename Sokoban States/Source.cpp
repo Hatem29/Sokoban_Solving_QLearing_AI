@@ -326,35 +326,40 @@ int main()
 	srand((unsigned)time(NULL));
 	vector<vector<int>> state = init();
 
-	QLearn(state,100, 0.8);
+	QLearn(state,200, 0.8);
 
-	for (int i = 0; i < Qtable.size(); i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			cout << Qtable[i][j] << " ";
-		}
-		cout << endl << endl;
-	}
+	//for (int i = 0; i < Qtable.size(); i++)
+	//{
+	//	for (int j = 0; j < 4; j++)
+	//	{
+	//		cout << Qtable[i][j] << " ";
+	//	}
+	//	cout << endl << endl;
+	//}
 
 	vector<pair<int, int>> availableStates = getAvailableStates(state);
 	pair<int, int> agentLoc = availableStates[rand() % availableStates.size()];
 	state[agentLoc.first][agentLoc.second] = 5;
 
-	stack< vector<vector<int>> > Steps;
-	playGame(state, Steps);
-
-	while (!Steps.empty())
+	
+	int c = 1000;
+	while (c--) 
 	{
-		for (int i = 0; i < state.size(); i++)
+		stack< vector<vector<int>> > Steps;
+		playGame(state, Steps);
+
+		while (!Steps.empty())
 		{
-			for (int j = 0; j < state[i].size(); j++)
+			for (int i = 0; i < state.size(); i++)
 			{
-				cout << Steps.top()[i][j] << " ";
+				for (int j = 0; j < state[i].size(); j++)
+				{
+					cout << Steps.top()[i][j] << " ";
+				}
+				cout << endl << endl;
 			}
-			cout << endl << endl;
+			cout << endl;
+			Steps.pop();
 		}
-		cout << endl;
-		Steps.pop();
 	}
 }
